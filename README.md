@@ -4,7 +4,7 @@ This repository holds all the Java classes I use to create networks and measure 
 
 ## freightNetworks
 
-This is the Java package currently being developed and under code review. This package contains classes that create a directed networks from an edgelist/lnklist file and then calculates metrics related to the network. 
+This is the Java package currently being developed and under code review. This package contains classes that create a directed network from an edgelist/lnklist file and then calculates metrics related to the network. 
 
 The following checklist shows the basic metrics that can be calculated and those that I still have to code:
 * [X] Degree centrality (In, Out and Total)
