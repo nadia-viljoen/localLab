@@ -32,7 +32,7 @@ public class CalculateMetrics {
 			bdegree.write("NodeID,Lon,Lat,X,Y,C_Dtot,C_Din,C_Dout");
 			bdegree.newLine();
 			Iterator<FreightNode> nodeIterator = nodeList.iterator();
-			while (nodeIterator.hasNext()) { //Iterate through the nodeList calculating the degrees fro each node
+			while (nodeIterator.hasNext()) { //Iterate through the nodeList calculating the degrees for each node
 				FreightNode current =nodeIterator.next();
 				currentDegree=freightNetwork.degree(current);
 				currentInDegree=freightNetwork.inDegree(current);
@@ -61,7 +61,7 @@ public class CalculateMetrics {
 	public static void main(String[] args) throws FileNotFoundException{
 		String path = args [0]; //path to folder with linklist
 		String name = args[1]; //network identifier
-		String linkType = args[2]; //specifies what an link represents in the linkList
+		String linkType = args[2]; //specifies what a link represents in the linkList
 
 		CalculateMetrics cMet = new CalculateMetrics(path,name,linkType);
 		String degreePath=path+name+"_"+linkType+"_";

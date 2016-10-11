@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import edu.uci.ics.jung.graph.DirectedGraph;
 import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
@@ -54,33 +55,26 @@ public class GenerateNetwork {
 
 		//Create nodeList and linkList from readList
 		int dim = readList.size();
-		ArrayList<FreightNode> nodeList = new ArrayList<FreightNode>();
-		ArrayList <String> key = new ArrayList<String>(); //this is an additional ArrayList that stores the index and node id of the nodes in nodeList. I had to add this because I don't know how to search for the int id alone without adding all the other fields
+		HashMap<Integer,FreightNode> nodeList = new HashMap<Integer,FreightNode>();
 		String [] currentString = new String[11];
 		int [][] linklist = new int [dim][3];
-		for (int i =0; i<dim;i++){ //should it be <= or <? test
+		for (int i =0; i<dim;i++){ 
 			currentString = readList.get(i).split(";");
 			linklist[i][0]=Integer.parseInt(currentString[0]);
 			linklist[i][1]=Integer.parseInt(currentString[5]);
 			linklist[i][2]=Integer.parseInt(currentString[10]);
 			for(int y =0;y<=5;y=y+5){
-				if(!nodeList.contains(currentString[y])){//if the node is not already in the nodeList
+				if(!nodeList.containsKey(Integer.parseInt(currentString[y]))){//if the node is not already in the nodeList
 					FreightNode currentNode =new FreightNode(currentString[y], Double.parseDouble(currentString[y+1]), Double.parseDouble(currentString[y+2]), Double.parseDouble(currentString[y+3]), Double.parseDouble(currentString[y+4]));
-					nodeList.add(currentNode);
-					key.add(currentString[y]);
+					nodeList.put(Integer.parseInt(currentString[y]), currentNode);
 				}
 			}
 		}
 
 		//Create the graph from the nodeList and linklist
 		freightNetwork = new DirectedSparseMultigraph<FreightNode, FreightLink>();
-		String idFrom;
-		String idTo;
 		for (int k =0; k<dim;k++){
-			idFrom = Integer.toString(linklist[k][0]);
-			idTo = Integer.toString(linklist[k][1]);
-			freightNetwork.addEdge(new FreightLink(Integer.toString(k),linklist[k][2]),nodeList.get(key.indexOf(idFrom)),nodeList.get(key.indexOf(idTo)),EdgeType.DIRECTED);
-
+			freightNetwork.addEdge(new FreightLink(Integer.toString(k),linklist[k][2]),nodeList.get(linklist[k][0]),nodeList.get(linklist[k][1]),EdgeType.DIRECTED);
 		}
 		return freightNetwork;
 	}
